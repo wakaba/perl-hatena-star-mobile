@@ -1,0 +1,80 @@
+=head1 NAME
+
+Hatena::Star::Data::EntryStars - Handling of entry-stars data structures
+
+=head1 SYNOPSIS
+
+  use Hatena::Star::Data::EntryStars;
+  
+  my $entry_user_stars = Hatena::Star::Data::EntryStars
+      ->expanded_entry_data_to_entry_user_stars_data($entry_json);
+
+=head1 DESCRIPTION
+
+The C<Hatena::Star::Data::EntryStars> module provides a function to
+convert structure of data describing stars added by users to an entry.
+
+=head1 FUNCTION
+
+=over 4
+
+=item $entry_user_stars = $class->expanded_entry_data_to_entry_user_stars_data($entry_json)
+
+Converts the hash reference that represents an entry in the
+"star-expanded" format (the format returned by
+C<http://s.hatena.com/entry.json> API) into the array reference in the
+"entry user stars" format.
+
+In the "star-expanded" format stars added to the entry are grouped by
+their colors and order by date, e.g.
+
+  {
+      stars => [
+          {name => 'jkondo', quote => 'Hi!'},
+          {name => 'stanaka'},
+          {name => 'jkondo', quote => 'Yaa!'},
+      ],
+      colored_stars => [
+          {color => 'red', stars => [{name => 'chris4403'}, {name => 'birdie7']},
+          {color => 'green', stars => [{name => 'chris4403'}]},
+      ],
+  }
+
+In the "entry user stars" format stars are grouped by users and
+duplicate stars are collapsed, e.g.
+
+  [
+      {
+          name => 'chris4403',
+          stars => {green => 1, red => 1},
+      },
+      {
+          name => 'birdie7',
+          stars => {red => 1},
+      },
+      {
+          name => 'jkondo',
+          stars => {yellow => 2},
+          quotes => ['Hi!', 'Yaa!'],
+      },
+      {
+          name => 'stanaka',
+          stars => {yellow => 1},
+      },
+  ]
+
+=back
+
+=head1 AUTHORS
+
+id:motemen <motemen@hatena.ne.jp>, Wakaba (id:wakabatan)
+<wakabatan@hatena.ne.jp>
+
+=head1 LICENSE
+
+Copyright 2010 Hatena <http://www.hatena.com/>.
+
+This library is free software; you may redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

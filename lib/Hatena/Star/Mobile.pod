@@ -1,0 +1,179 @@
+=head1 NAME
+
+Hatena::Star::Mobile - Perl extension for embedding Hatena Star into mobile sites.
+
+=head1 SYNOPSIS
+
+  use Hatena::Star::Mobile;
+
+  my $entries = [
+    {uri => 'http://d.hatena.ne.jp/jkondo/20080123/1201040123'},
+    {uri => 'http://d.hatena.ne.jp/jkondo/20080122/1200947996'},
+    {
+        uri      => 'http://d.hatena.ne.jp/jkondo/20080121/1200906620',
+        location => 'http://d.hatena.ne.jp/jkondo/mobile', # return url to be used only for this entry
+    },
+  ];
+
+  my $star_entries = Hatena::Star::Mobile->get_star_entries(
+    entries => $entries,
+    location => 'http://d.hatena.ne.jp/jkondo/mobile',     # return url for add button to be used globally
+    color => 'gr', # color for add button
+    hatena_domain => 'hatena.ne.jp', # base domain name of Hatena
+  );
+
+  for my $se (@$star_entries) {
+    print $se->{star_html}; # html string for add button and stars
+    print $se->{uri}; # entry's uri
+  }
+
+=head1 DESCRIPTION
+
+The C<Hatena::Star::Mobile> module adds Hatena Star's star ratings and
+"add star" buttons to your Web pages.  While the C<HatenaStar.js>, the
+JavaScript client implementation of Hatena Star, could be used to add
+Hatena Star functionality to your Web pages for modern Web browsers,
+most of Japanese legacy mobile Web browsers do not support or provide
+only limited support for JavaScript, and therefore some kind of
+server-side processing is preferred for better user experience.  This
+module retrieves star rating data using Hatena Star API and returns
+HTML fragment representing them as sequences of HTML C<img> elements.
+
+=head1 METHOD
+
+The module provides the class method: C<get_star_entries>.  It
+receives named parameters and returns an array reference containing
+the result.  Available input named parameters include:
+
+=over 4
+
+=item C<add_img> (Default: Auto)
+
+The URL of the image for the "add star" button.
+
+=item C<color> (Default: C<gr>)
+
+Color variation for the "add star" button.  Available values include:
+C<bl> (black), C<br> (blue), C<dark> (dark blue), C<dg> (dark gray),
+C<gr> (green), C<pr> (purple), C<rd> (red).  This parameter is ignored
+if the C<adD_img> parameter is specified.
+
+=item C<entries> (REQUIRED)
+
+The list of entries to retrieve HTMLized star rating data.  Each item
+in the list must be hash references, which contain:
+
+=over 4
+
+=item C<uri> (REQUIRED)
+
+The canonical URL of the entry.  It must be a normalized absolute URL
+reference with no non-ASCII characters.
+
+=item C<location> (Default: Same as C<location> parameter for the method)
+
+The return URL for the "add star" button.  After the user added stars
+to the URL, he is redirected to this URL.  It must be an absolute URL
+reference.
+
+=back
+
+=item C<get_entry_url> (Default: Hatena Star entry page)
+
+Subroutine to obtain the URL of the anchor containing added star
+images.  By default star images are linked to the entry page of Hatena
+Star Web site (for Japanese mobile phone browsers), which contains
+more detailed information on star added for the entry.
+
+The value must be a C<CODE> reference that returns a URL.  The C<CODE>
+reference would receive two arguments - C<$uri> and C<$location>,
+which are corresponding to the C<uri> and C<location> parameters
+specified in the C<entries> array (but C<$location> always has a value
+even when C<location> parameter was omitted).
+
+=item C<hatena_domain> (Default: C<hatena.com>)
+
+The domain of Hatena Web site.  It must be either C<hatena.com> or
+C<hatena.ne.jp>.  For Japanese mobile phone users C<hatena.ne.jp>
+domain should be specified, as most of Japanese mobile phone users are
+usually accessing the C<hatena.ne.jp> domain.
+
+=item C<location> (Default: Same as the entry URL)
+
+The default value for the return URL for the "add star" button.  After
+the user added stars to the URL, he is redirected to this URL, unless
+it is explicitly specified for the entry in the C<entries> parameter.
+It must be an absolute URL reference.
+
+=item C<use_http_post> (Default: no)
+
+If a true value is specified, the HTTP C<POST> method is used to
+access to Hatena Star API.  This parameter is useful if you specify
+numbers of URLs in C<entries> such that HTTP C<GET> request would fail
+because of the length of the request-URI.
+
+=back
+
+The returned array reference contains zero or more items corresponding
+input C<entries>, which includes following values as hash
+references:
+
+=over 4
+
+=item C<entries> (If available)
+
+List of stars, as provided by Hatena Star API.
+
+=item C<star_html> (Always)
+
+The HTML fragment to embed star rating data and "add star" button into
+your Web page.
+
+=item C<uri> (Always)
+
+The URL of the entry.
+
+=back
+
+=head1 HISTORY
+
+=over 4 
+
+=item 0.05 (January 2010)
+
+Added parameters C<color>, C<add_img>, C<get_entry_url>, and
+C<use_http_post> to the method C<get_star_entries>.  Added parameter
+C<location> to items in the C<entries> hashref.  Added colored star
+support.
+
+=item 0.03 (24 July 2008)
+
+Added links to star entry.
+
+=item 0.02 (22 January 2008)
+
+Added html of add button to empty entry.
+
+0.01  Tue Jan 22 18:47:25 2008
+
+=item 0.01 (22 January 2008)
+
+Original version; Created by h2xs 1.23 with options -X -A -n
+Hatena::Star::Mobile
+
+=back
+
+=head1 AUTHORS
+
+Junya Kondo (id:jkondo), Naoya Ito (id:naoya), id:antipop, id:onishi,
+id:cho45, id:nanolia, id:chris4403, Wakaba (id:wakabatan)
+<wakabatan@hatena.ne.jp>.
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) Hatena Inc. All Rights Reserved.
+
+This library is free software; you may redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

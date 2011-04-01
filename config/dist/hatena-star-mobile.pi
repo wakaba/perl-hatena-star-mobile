@@ -1,0 +1,35 @@
+{
+    main_module_name => 'Hatena::Star::Mobile',
+    file_names => [qw(
+        lib/Hatena/Star/Mobile.pm
+        lib/Hatena/Star/Mobile.pod
+        lib/Hatena/Star/Mobile/Image.pm
+        lib/Hatena/Star/Mobile/Image.pod
+        lib/Hatena/Star/Data/EntryStars.pm
+        lib/Hatena/Star/Data/EntryStars.pod
+        t/Makefile
+        t/lib/Test/Hatena/Star/Mobile.pm
+        t/local/mobile-image.t
+        t/remote/01-get_star_entries.t
+        t/remote/02-get_star_entries_use_http_post.t
+        t/remote/03-star_entry_anchor.t
+        t/data/entrystars.t
+        config/dist/hatena-star-mobile.pi
+    )],
+    req_modules => {
+        'Carp' => 0,
+        'HTTP::Request' => 0,
+        'JSON::Syck' => 0,
+        'LWP::UserAgent' => 0,
+        'URI' => 0,
+        'URI::Escape' => 0,
+        'URI::QueryParam' => 0,
+    },
+    t_req_modules => {
+        'Exporter::Lite' => 0,
+        'Path::Class' => 0,
+        'Test::Class' => 0,
+        'Test::Differences' => 0,
+        'Test::More' => 0,
+    },
+};

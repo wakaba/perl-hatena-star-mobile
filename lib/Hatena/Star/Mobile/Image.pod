@@ -1,0 +1,38 @@
+=head1 NAME
+
+Hatena::Star::Mobile::Image - A |Hatena::Star::Mobile| compatible HTML
+fragment generator for Hatena Star Image API
+
+=head1 DESCRIPTION
+
+The C<Hatena::Star::Mobile::Image> module provides a
+L<Hatena::Star::Mobile>-compatible interface to generate HTML fragment
+using Hatena Star Image API.
+
+For more information on the interface, see documentation for
+L<Hatena::Star::Mobile>.  Note that C<Hatena::Star::MObile::Image>
+ignores most of optional parameters available for
+L<Hatena::Star::Mobile> for simplicity.
+
+=head1 CHANGES
+
+=over 4
+
+=item 0.05 (January 2011)
+
+First version.
+
+=back
+
+=head1 AUTHOR
+
+Wakaba (id:wakabatan) <wakabatan@hatena.ne.jp>.
+
+=head1 LICENSE
+
+Copyright 2010-2011 Hatena <http://www.hatena.com/>.
+
+This library is free software; you may redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
