@@ -24,6 +24,12 @@ First version.
 
 =back
 
+=head1 SEE ALSO
+
+Hatena Star Image API
+<http://developer.hatena.com/ja/documents/star/apis/image> (In
+Japanese).
+
 =head1 AUTHOR
 
 Wakaba (id:wakabatan) <wakabatan@hatena.ne.jp>.
